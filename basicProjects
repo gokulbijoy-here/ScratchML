@@ -1,1 +1,28 @@
+#STUDENT MARK ANALYSER
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("student_marks.csv")
+
+print("TOTAL STUDENTS:",len(df))
+
+print("SUBJECT AVERAGES:\n",df.mean(numeric_only=True))
+
+df["total"] = df[["Maths","Chemistry","Physics","Computer_Science"]].sum(axis=1)
+df["average"] = df["total"]/4
+df["rank"] = df["total"].rank(ascending=False,method="min").astype(int)
+
+#Top performer
+topper = df[df["total"] == df["total"].max()]
+print("TOPPER:\n",topper)
+
+#visualise
+df.plot(x="Name", y=["Maths","Chemistry","Physics","Computer_Science"], kind="bar")
+plt.title("COMPARISON")
+plt.show()
+
+
+
+
 
